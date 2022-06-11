@@ -10,15 +10,11 @@ class CommandsMessageView:
         welcome_message = ('MovieForTonight bot can help you find and share movies.'
                            'It works in any chat, simply type @movieftbot in the text field.')
 
-        btn_text = 'SEARCH FOR A MOVIE'
-        markup = InlineKeyboardMarkup()
-        btn = InlineKeyboardButton(text=btn_text, switch_inline_query_current_chat='')
-        markup.add(btn)
-
         self._controller.send_message(
             chat_id=message.chat.id,
             text=welcome_message,
-            reply_markup=markup,
+            reply_markup=InlineKeyboardMarkup().add(
+                InlineKeyboardButton(text='SEARCH FOR A MOVIE', switch_inline_query_current_chat='')),
             parse_mode='HTML',
             disable_web_page_preview=True
         )

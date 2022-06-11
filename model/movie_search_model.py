@@ -1,11 +1,7 @@
-import logging
-
 from model.movie import Movie
 from model.services.themoviedb_service.configuration import MOVIE_BASE_URL
 from model.services.themoviedb_service.genres import movie_genres
 from model.services.themoviedb_service.movie_db_service import TheMovieDBService
-
-logger = logging.getLogger(__name__)
 
 
 class MovieSearchModel:
@@ -23,7 +19,6 @@ class MovieSearchModel:
                 if current_movie.release_date:
                     current_movie.release_year = current_movie.release_date.split('-')[0]
                 else:
-                    logger.debug(f'{current_movie.title} missing release_date')
                     current_movie.release_year = ''
 
             if not current_movie.genres:
@@ -33,15 +28,12 @@ class MovieSearchModel:
                         for genre_id in result['genre_ids']:
                             if genre_id in movie_genres:
                                 current_movie.genres.append(movie_genres[genre_id])
-                    else:
-                        logger.debug(f'{current_movie.title} {current_movie.release_year} missing genres')
 
             if not current_movie.url:
                 current_movie.url = f'{MOVIE_BASE_URL}{current_movie.id}'
 
             if not current_movie.vote_average:
                 current_movie.vote_average = 0
-                logger.debug(f'{current_movie.title} {current_movie.release_year} missing vote_average')
 
             movies.append(current_movie)
         return movies
