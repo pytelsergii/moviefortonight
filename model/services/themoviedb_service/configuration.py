@@ -1,6 +1,7 @@
 from enum import Enum
 
 IMAGE_BASE_URL = 'https://image.tmdb.org/t/p/'
+MOVIE_BASE_URL = 'https://www.themoviedb.org/movie/'
 
 
 class PosterSize(Enum):
