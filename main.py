@@ -4,7 +4,7 @@ import telebot
 from flask import Flask
 from flask import request
 
-import logger
+import config
 from controller.bot_controller import bot
 from misc import HEROKU_APP_URL, MFT_TOKEN
 
@@ -27,5 +27,5 @@ def webhook():
 
 
 if __name__ == '__main__':
-    logger.setup_logging()
+    config.setup_config()
     app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 5000)))

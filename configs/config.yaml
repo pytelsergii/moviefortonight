@@ -1,0 +1,65 @@
+logging:
+  version: 1
+  disable_existing_loggers: False
+
+  formatters:
+    standard:
+      format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+
+  handlers:
+    console:
+      class: logging.StreamHandler
+      level: DEBUG
+      formatter: standard
+      stream: ext://sys.stdout
+
+    file_handler:
+      class: logging.handlers.RotatingFileHandler
+      level: INFO
+      formatter: standard
+      filename: tmp/info.log
+      maxBytes: 10485760 # 10MB
+      backupCount: 20
+      encoding: utf8
+
+  root:
+    level: INFO
+    handlers: [ console, file_handler ]
+
+
+#  loggers:
+#    model.services.themoviedb_service.movie_db_service:
+#      level: INFO
+#      handlers: [ console, file_handler ]
+#      propagate: no
+#
+#    model:
+#      movie_search_model:
+#      level: DEBUG
+#      handlers: [ console ]
+#      propagate: no
+
+#version: 1
+#disable_existing_loggers: False
+#formatters:
+#  standard:
+#    format: '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+#handlers:
+#  console:
+#    class: logging.StreamHandler
+#    level: DEBUG
+#    formatter: standard
+#    stream: ext://sys.stdout
+#  file:
+#    class: logging.FileHandler
+#    level: DEBUG
+#    formatter: standard
+#    filename: tmp/info.log
+#loggers:
+#  '__main__':
+#    level: DEBUG
+#    handlers: [ console, file ]
+#    propagate: no
+#root:
+#  level: INFO
+#  handlers: [ console ]
