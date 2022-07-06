@@ -41,9 +41,16 @@ class TVShowResultArticle(InlineQueryResultArticle):
     def _input_message_content(self):
         msg_first_line = f'<b>{self.title}</b>\n'
         msg_second_line = f'{", ".join(self._tv_show.genres)}\n' if self._tv_show.genres else ''
-        msg_third_line = f'<b>{self.STAR_CHAR}</b> {self._tv_show.vote_average}\n' if self._tv_show.vote_average > 0 else 'No ratings\n'
+        overview = self._tv_show.overview if self._tv_show.overview else ''
+        if self._tv_show.vote_average and self._tv_show.vote_average > 0:
+            if overview:
+                msg_third_line = f'<b>{self.STAR_CHAR}</b> {self._tv_show.vote_average}\n'
+            else:
+                msg_third_line = f'<b>{self.STAR_CHAR}</b> {self._tv_show.vote_average}'
+        else:
+            msg_third_line = 'No ratings\n' if overview else 'No ratings'
         poster_url = self._tv_show.poster_url if self._tv_show.poster_url else self.POSTER_PLACEHOLDER
-        msg_fourth_line = f'{self._tv_show.overview if self._tv_show.overview else ""}<a href="{poster_url}">&#8205;</a>'
+        msg_fourth_line = f'{overview}<a href="{poster_url}">&#8205;</a>'
         input_msg = f'{msg_first_line}{msg_second_line}{msg_third_line}{msg_fourth_line}'
 
         return InputTextMessageContent(
