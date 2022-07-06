@@ -42,7 +42,10 @@ class MovieResultArticle(InlineQueryResultArticle):
         msg_second_line = f'{", ".join(self._movie.genres)}\n' if self._movie.genres else ''
         overview = self._movie.overview if self._movie.overview else ''
         if self._movie.vote_average and self._movie.vote_average > 0:
-            msg_third_line = f'<b>{self.STAR_CHAR}</b> {self._movie.vote_average}\n'
+            if overview:
+                msg_third_line = f'<b>{self.STAR_CHAR}</b> {self._movie.vote_average}\n'
+            else:
+                msg_third_line = f'<b>{self.STAR_CHAR}</b> {self._movie.vote_average}'
         else:
             msg_third_line = 'No ratings\n' if overview else 'No ratings'
         poster_url = self._movie.poster_url if self._movie.poster_url else self.POSTER_PLACEHOLDER
